@@ -220,7 +220,6 @@ def downscale_average(image, s):
             out[i_out, j_out] = patch.mean()
     return out
 
-
 def upscale_image(image, s, kernel):
     H, W = image.shape
     x_old = np.arange(W)
@@ -239,6 +238,21 @@ def upscale_image(image, s, kernel):
 
     return upscaled
 
+def downscale_maxpool(image, s):
+    H, W = image.shape
+    k = s
+    p = 0
+    H_out = (H - k + 1 + p) // s
+    W_out = (W - k + 1 + p) // s
+    out = np.zeros((H_out, W_out))
+    for i_out in range(H_out):
+        for j_out in range(W_out):
+            i = i_out * s
+            j = j_out * s
+            patch = image[i:i+k, j:j+k]
+            out[i_out, j_out] = patch.max()
+    return out
+  
 image_path = "lista2/pug.jpg"
 s = 4;
 kernel = h2
@@ -247,7 +261,10 @@ img = Image.open(image_path).convert("L")
 image = np.array(img)
 
 downscaled = downscale_average(image, s)
+downscaled2 = downscale_maxpool(image, s)
 upscaled = upscale_image(downscaled, s, kernel)
+upscaled2 = upscale_image(downscaled2, s, kernel)
+# upscaled2 = upscale_image(image, s, kernel)
 
 H, W = upscaled.shape
 image_cropped = image[:H, :W]
@@ -255,22 +272,41 @@ image_cropped = image[:H, :W]
 mse = mean_squared_error(image_cropped, upscaled)
 print(f"MSE po pomniejszeniu i powiększeniu: {mse:.4f}")
 
+mse2 = mean_squared_error(image_cropped, upscaled2)
+print(f"MSE po pomniejszeniu max-pooling i powiększeniu: {mse2:.4f}")
+
 plt.figure(figsize=(12,8))
 
-plt.subplot(2,2,1)
+plt.subplot(2,3,1)
 plt.imshow(image, cmap='gray')
 plt.title(f"Oryginał ({image.shape[1]}x{image.shape[0]})")
 plt.axis('off')
 
-plt.subplot(2,2,2)
+plt.subplot(2,3,2)
 plt.imshow(downscaled, cmap='gray', interpolation='nearest')
 plt.title(f"Pomniejszony {s} razy ({downscaled.shape[1]}x{downscaled.shape[0]})")
 plt.axis('off')
 
-plt.subplot(2,2,3)
+plt.subplot(2,3,3)
 plt.imshow(upscaled, cmap='gray', interpolation='nearest')
 plt.title(f"Powiększony {s} razy ({upscaled.shape[1]}x{upscaled.shape[0]}) \nMSE = {mse:.4f}")
 plt.axis('off')
-  
+
+plt.subplot(2,3,4)
+plt.imshow(downscaled2, cmap='gray', interpolation='nearest')
+plt.title(f"Pomniejszony max-pooling {s} razy ({downscaled2.shape[1]}x{downscaled2.shape[0]})")
+plt.axis('off')
+
+plt.subplot(2,3,5)
+plt.imshow(upscaled2, cmap='gray', interpolation='nearest')
+plt.title(f"Powiększony max-pooling {s} razy ({upscaled2.shape[1]}x{upscaled2.shape[0]}) \nMSE = {mse2:.4f}")
+plt.axis('off')
+
+
+# plt.subplot(2,2,4)
+# plt.imshow(upscaled2, cmap='gray', interpolation='nearest')
+# plt.title(f"Powiększony bez pomniejszania ({upscaled2.shape[1]}x{upscaled2.shape[0]})")
+# plt.axis('off')
+
 plt.tight_layout()
 plt.show()
