@@ -184,6 +184,8 @@ print("\n--- KONIEC DODATKOWEGO ZADANIA 5 ---")
 
 # ZADANIE 2
 
+print("\n--- CZĘŚĆ 2 - SKALOWANIE OBRAZÓW ---")
+
 def downscale_average(image, s):
     H, W = image.shape
     k = s
@@ -303,6 +305,8 @@ plt.axis('off')
 
 plt.tight_layout()
 plt.show()
+
+print("\n--- SKALOWANIE OBRAZÓW KOLOROWYCH (RGB) ---")
 
 def downscale_average_rgb(image_rgb, s):
     channels = []
