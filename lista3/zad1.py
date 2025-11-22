@@ -302,11 +302,89 @@ plt.imshow(upscaled2, cmap='gray', interpolation='nearest')
 plt.title(f"Powiększony max-pooling {s} razy ({upscaled2.shape[1]}x{upscaled2.shape[0]}) \nMSE = {mse2:.4f}")
 plt.axis('off')
 
-
 # plt.subplot(2,2,4)
 # plt.imshow(upscaled2, cmap='gray', interpolation='nearest')
 # plt.title(f"Powiększony bez pomniejszania ({upscaled2.shape[1]}x{upscaled2.shape[0]})")
 # plt.axis('off')
+
+plt.tight_layout()
+plt.show()
+
+def downscale_average_rgb(image_rgb, s):
+    channels = []
+    for ch in range(3):
+        ch_img = image_rgb[..., ch]
+        ch_down = downscale_average(ch_img, s)
+        channels.append(ch_down)
+    return np.stack(channels, axis=-1)
+
+def downscale_maxpool_rgb(image_rgb, s):
+    channels = []
+    for ch in range(3):
+        ch_img = image_rgb[..., ch]
+        ch_down = downscale_maxpool(ch_img, s)
+        channels.append(ch_down)
+    return np.stack(channels, axis=-1)
+
+def upscale_image_rgb(image_rgb_small, s, kernel):
+    channels = []
+    for ch in range(3):
+        ch_img = image_rgb_small[..., ch]
+        ch_up = upscale_image(ch_img.astype(float), s, kernel)
+        channels.append(ch_up)
+    return np.stack(channels, axis=-1)
+
+
+def to_uint8(img):
+    img = np.clip(img, 0, 255)
+    return img.astype(np.uint8)
+  
+image_path = "lista2/pug.jpg"
+s = 4;
+kernel = h2
+img = Image.open(image_path).convert("RGB")
+image = np.array(img)
+
+downscaled = downscale_average_rgb(image, s)
+downscaled2 = downscale_maxpool_rgb(image, s)
+upscaled = upscale_image_rgb(downscaled, s, kernel)
+upscaled2 = upscale_image_rgb(downscaled2, s, kernel)
+
+H, W = upscaled.shape[:2]
+image_cropped = image[:H, :W].astype(float)
+
+mse = mean_squared_error(image_cropped.ravel(), upscaled.ravel())
+print(f"MSE po pomniejszeniu average i powiększeniu: {mse:.4f}")
+
+mse2 = mean_squared_error(image_cropped.ravel(), upscaled2.ravel())
+print(f"MSE po pomniejszeniu max-pooling i powiększeniu: {mse2:.4f}")
+
+plt.figure(figsize=(12,8))
+
+plt.subplot(2,3,1)
+plt.imshow(image)
+plt.title(f"Oryginał ({image.shape[1]}x{image.shape[0]})")
+plt.axis('off')
+
+plt.subplot(2,3,2)
+plt.imshow(downscaled.astype(np.uint8), interpolation='nearest')
+plt.title(f"Pomniejszony {s} razy ({downscaled.shape[1]}x{downscaled.shape[0]})")
+plt.axis('off')
+
+plt.subplot(2,3,3)
+plt.imshow(to_uint8(upscaled), interpolation='nearest')
+plt.title(f"Powiększony {s} razy ({upscaled.shape[1]}x{upscaled.shape[0]}) \nMSE = {mse:.4f}")
+plt.axis('off')
+
+plt.subplot(2,3,4)
+plt.imshow(downscaled2.astype(np.uint8), interpolation='nearest')
+plt.title(f"Pomniejszony max-pooling {s} razy ({downscaled2.shape[1]}x{downscaled2.shape[0]})")
+plt.axis('off')
+
+plt.subplot(2,3,5)
+plt.imshow(to_uint8(upscaled2), interpolation='nearest')
+plt.title(f"Powiększony max-pooling {s} razy ({upscaled2.shape[1]}x{upscaled2.shape[0]}) \nMSE = {mse2:.4f}")
+plt.axis('off')
 
 plt.tight_layout()
 plt.show()
