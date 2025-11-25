@@ -234,7 +234,7 @@ def downscale_maxpool(image, s):
             out[i_out, j_out] = patch.max()
     return out
   
-image_path = "lista2/pug.jpg"
+image_path = "lista3/pug.jpg"
 s = 4;
 kernel = h2
 
