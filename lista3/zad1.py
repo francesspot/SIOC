@@ -5,6 +5,8 @@ import numpy.random as rnd
 from skimage import io
 from PIL import Image
 
+# ZADANIE 1
+# funkcje do interpolacji
 def f1(x):
   return np.sin(x)
 
@@ -18,6 +20,7 @@ def f2(x):
 def f3(x):
   return np.sign(np.sin(8 * x))
 
+# jądra do interpolacji
 def h1(t):
   return (t >= 0) & (t <= 1)
 
@@ -30,6 +33,7 @@ def h3(t):
   result[mask] = 1 - np.abs(t[mask])
   return result
 
+# funkcja interpolacji
 def interpolate(x_old, y_old, x_new, kernel):
   y_new = np.zeros_like(x_new, dtype=float)
   dis = x_old[1] - x_old[0]
@@ -61,6 +65,7 @@ kernels = [
 
 scales = [2, 4, 10]
 
+# wykresy dla różnych skal
 for scale in scales:
   plt.figure(figsize=(12, 8))
   plt.suptitle(f"Interpolacja funkcji - Skala {scale}x", fontsize=16)
@@ -103,6 +108,7 @@ print("\n--- DODATKOWE ZADANIE 4 ---")
 
 rng = np.random.default_rng()
 
+# funkcja interpolacji z medianą odległości
 def interpolate_median_dist(x_old, y_old, x_new, kernel):
   y_new = np.zeros_like(x_new, dtype=float)
 
@@ -123,7 +129,7 @@ def interpolate_median_dist(x_old, y_old, x_new, kernel):
       y_new[i] = y_old[nearest_idx]
   return y_new
 
-
+# porównanie równomiernego i losowego rozmieszczenia punktów
 for func_name, func in functions:
   print(f"\nFunkcja: {func_name}")
   for kernel_name, kernel in kernels:
@@ -158,15 +164,18 @@ print("\n--- DODATKOWE ZADANIE 5 ---")
 target = 16
 x_target = np.linspace(-np.pi, np.pi, N * target)
 
+# porównanie pojedynczej i wieloetapowej interpolacji
 for func_name, func in functions:
   print(f"\nFunkcja: {func_name}")
   for kernel_name, kernel in kernels:
+    # Pojedyncza interpolacja 16x
     y_single = interpolate(x_original, func(x_original), x_target, kernel)
     mse_single = mean_squared_error(func(x_target), y_single)
     
     x_curr = x_original.copy()
     y_curr = func(x_curr).copy()
     
+    # Wieloetapowa interpolacja 4x(2x)
     for i in range(4):
       x_next = np.linspace(-np.pi, np.pi, len(x_curr) * 2)
       y_next = interpolate(x_curr, y_curr, x_next, kernel)
@@ -186,6 +195,7 @@ print("\n--- KONIEC DODATKOWEGO ZADANIA 5 ---")
 
 print("\n--- CZĘŚĆ 2 - SKALOWANIE OBRAZÓW ---")
 
+# funkcja do zmniejszania obrazów
 def downscale_average(image, s):
     H, W = image.shape
     k = s
@@ -201,6 +211,7 @@ def downscale_average(image, s):
             out[i_out, j_out] = patch.mean()
     return out
 
+# funkcja do powiększania obrazów
 def upscale_image(image, s, kernel):
     H, W = image.shape
     x_old = np.arange(W)
@@ -219,6 +230,7 @@ def upscale_image(image, s, kernel):
 
     return upscaled
 
+# funkcja do zmniejszania obrazów metodą max-poolingu
 def downscale_maxpool(image, s):
     H, W = image.shape
     k = s
@@ -233,7 +245,8 @@ def downscale_maxpool(image, s):
             patch = image[i:i+k, j:j+k]
             out[i_out, j_out] = patch.max()
     return out
-  
+
+# wczytanie obrazu i przygotowanie do skalowania
 image_path = "lista3/pug.jpg"
 s = 4;
 kernel = h2
@@ -308,6 +321,7 @@ plt.show()
 
 print("\n--- SKALOWANIE OBRAZÓW KOLOROWYCH (RGB) ---")
 
+# funkcje do skalowania obrazów RGB
 def downscale_average_rgb(image_rgb, s):
     channels = []
     for ch in range(3):
@@ -332,12 +346,13 @@ def upscale_image_rgb(image_rgb_small, s, kernel):
         channels.append(ch_up)
     return np.stack(channels, axis=-1)
 
-
+# funkcja do konwersji na uint8
 def to_uint8(img):
     img = np.clip(img, 0, 255)
     return img.astype(np.uint8)
-  
-image__path = "lista2/pug.jpg"
+
+# wczytanie obrazu i przygotowanie do skalowania  
+image_path = "lista3/pug.jpg"
 s = 4;
 kernel = h2
 img = Image.open(image_path).convert("RGB")
