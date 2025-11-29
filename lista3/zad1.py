@@ -20,7 +20,7 @@ def f2(x):
 def f3(x):
   return np.sign(np.sin(8 * x))
 
-# jądra do interpolacji
+# jądra interpolacji
 def h1(t):
   return (t >= 0) & (t <= 1)
 
@@ -230,7 +230,7 @@ def upscale_image(image, s, kernel):
 
     return upscaled
 
-# funkcja do zmniejszania obrazów metodą max-poolingu
+# funkcja do zmniejszania obrazów metodą max-pooling
 def downscale_maxpool(image, s):
     H, W = image.shape
     k = s
@@ -343,7 +343,7 @@ def upscale_image_rgb(image_rgb_small, s, kernel):
         channels.append(ch_up)
     return np.stack(channels, axis=-1)
 
-# funkcja do konwersji na uint8
+# funkcja do konwersji na format uint8
 def to_uint8(img):
     img = np.clip(img, 0, 255)
     return img.astype(np.uint8)
