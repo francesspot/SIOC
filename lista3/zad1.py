@@ -20,7 +20,7 @@ def f2(x):
 def f3(x):
   return np.sign(np.sin(8 * x))
 
-# jądra do interpolacji
+# jądra interpolacji
 def h1(t):
   return (t >= 0) & (t <= 1)
 
@@ -230,7 +230,7 @@ def upscale_image(image, s, kernel):
 
     return upscaled
 
-# funkcja do zmniejszania obrazów metodą max-poolingu
+# funkcja do zmniejszania obrazów metodą max-pooling
 def downscale_maxpool(image, s):
     H, W = image.shape
     k = s
@@ -280,9 +280,6 @@ print(f"MSE pomniejszenia max-pooling: {mse_down2:.4f}")
 mse2 = mean_squared_error(image_cropped, upscaled2)
 print(f"MSE po pomniejszeniu max-pooling i powiększeniu: {mse2:.4f}")
 
-upscaled3_cropped = upscaled3[:image_cropped.shape[0], :image_cropped.shape[1]]
-mse3 = mean_squared_error(image_cropped.astype(float).ravel(), upscaled3_cropped.ravel())
-print(f"MSE po powiększeniu bez pomniejszania: {mse3:.4f}")
 
 plt.figure(figsize=(12,8))
 
@@ -313,7 +310,7 @@ plt.axis('off')
 
 plt.subplot(2,3,6)
 plt.imshow(upscaled3, cmap='gray', interpolation='nearest')
-plt.title(f"Powiększony bez pomniejszania ({upscaled3.shape[1]}x{upscaled3.shape[0]}) \nMSE = {mse3:.4f}")
+plt.title(f"Powiększony bez pomniejszania ({upscaled3.shape[1]}x{upscaled3.shape[0]})")
 plt.axis('off')
 
 plt.tight_layout()
@@ -346,7 +343,7 @@ def upscale_image_rgb(image_rgb_small, s, kernel):
         channels.append(ch_up)
     return np.stack(channels, axis=-1)
 
-# funkcja do konwersji na uint8
+# funkcja do konwersji na format uint8
 def to_uint8(img):
     img = np.clip(img, 0, 255)
     return img.astype(np.uint8)
@@ -384,9 +381,6 @@ print(f"MSE pomniejszenia max-pooling: {mse_down2:.4f}")
 mse2 = mean_squared_error(image_cropped.ravel(), upscaled_rgb2.ravel())
 print(f"MSE po pomniejszeniu max-pooling i powiększeniu: {mse2:.4f}")
 
-upscaled3_cropped = upscaled_rgb3[:image_cropped.shape[0], :image_cropped.shape[1], :]
-mse3 = mean_squared_error(image_cropped.ravel(), upscaled3_cropped.ravel())
-print(f"MSE po powiększeniu bez pomniejszania: {mse3:.4f}")
 
 plt.figure(figsize=(12,8))
 
@@ -417,7 +411,7 @@ plt.axis('off')
 
 plt.subplot(2,3,6)
 plt.imshow(to_uint8(upscaled_rgb3), interpolation='nearest')
-plt.title(f"Powiększony bez pomniejszania ({upscaled_rgb3.shape[1]}x{upscaled_rgb3.shape[0]}) \nMSE = {mse3:.4f}")
+plt.title(f"Powiększony bez pomniejszania ({upscaled_rgb3.shape[1]}x{upscaled_rgb3.shape[0]})")
 plt.axis('off')
 
 plt.tight_layout()
