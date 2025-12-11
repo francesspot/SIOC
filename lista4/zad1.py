@@ -388,3 +388,81 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
+# DEMOZAIKOWANIE - metoda 6x6
+
+# Kernele do interpolacji
+kernel_R_6 = np.array([[1,0,0,0,0],[0,0,1,0,0],[0,1,0,1,0],[0,0,1,0,0],[0,0,0,0,1]], dtype=np.float32) / 8.0
+
+kernel_G_6 = np.array([[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0]], dtype=np.float32) / 8.0
+
+kernel_B_6 = np.array([[0,0,1,0,0],[0,1,0,0,0],[1,0,0,1,0],[0,0,1,0,0],[0,0,0,1,0]], dtype=np.float32) / 7.0
+
+# Maski Fuji 6x6
+mask_R_6 = np.array([[0, 0, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0]], dtype=np.float32)
+
+mask_G_6 = np.array([[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 1, 1], [0, 1, 1, 0, 1, 1], [1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 1, 1], [0, 1, 1, 0, 1, 1]], dtype=np.float32)
+
+mask_B_6 = np.array([[0, 1, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 0, 0]], dtype=np.float32)
+
+H, W = image.shape
+# Inicjalizacja masek dla kanałów R, G, B
+mask_R_6 = np.tile(mask_R_6, (H // 6 + 1, W // 6 + 1))[:H, :W]
+mask_G_6 = np.tile(mask_G_6, (H // 6 + 1, W // 6 + 1))[:H, :W]
+mask_B_6 = np.tile(mask_B_6, (H // 6 + 1, W // 6 + 1))[:H, :W]
+
+# Ekstrakcja znanych wartości dla każdego kanału
+R = image * mask_R_6
+G = image * mask_G_6
+B = image * mask_B_6
+
+# Interpolacja brakujących wartości
+R_interp = convolve2d(R, kernel_R_6)
+G_interp = convolve2d(G, kernel_G_6)
+B_interp = convolve2d(B, kernel_B_6)
+
+# Uzupełnienie brakujących wartości oryginalnymi danymi
+R_full = np.where(R >= 0, R, R_interp)
+G_full = np.where(G >= 0, G, G_interp)
+B_full = np.where(B >= 0, B, B_interp)
+
+# Scalanie kanałów w obraz RGB
+demosaiced_image_6 = np.stack((R_full, G_full, B_full), axis=-1)
+demosaiced_image_6 = np.clip(demosaiced_image_6, 0, 1)
+demosaiced_image_6 = (demosaiced_image_6 * 255).astype(np.uint8)
+
+plt.figure(figsize=(14, 8))
+
+plt.subplot(1, 2, 1)
+plt.title("Oryginał")
+plt.imshow(Image.open(image_path))
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.title("Demozaikowanie - Fuji 6x6")
+plt.imshow(demosaiced_image_6)
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+# Porównanie obu metod demozaikowania
+
+plt.figure(figsize=(18, 8))
+
+plt.subplot(1, 3, 1)
+plt.title("Oryginał")
+plt.imshow(Image.open(image_path))
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.title("Demozaikowanie Bayer")
+plt.imshow(demosaiced_image)
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.title("Demozaikowanie Fuji 6x6")
+plt.imshow(demosaiced_image_6)
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
