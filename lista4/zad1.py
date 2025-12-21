@@ -43,9 +43,9 @@ G = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]], dtype=np.float32) / 16.0
 
 box_blur = np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]], dtype=np.float32) / 9.0
 
-unsharp_masking = np.array([[1, 4, 6, 4, 1], [4, 16, 24, 16, 4], [6, 24, -476, 24, 6], [4, 16, 24, 16, 4], [1, 4, 6, 4, 1]], dtype=np.float32) / -256.0
-
 W = np.array([[ 0, -1,  0], [-1,  5, -1], [ 0, -1,  0]], dtype=np.float32)
+
+unsharp_masking = np.array([[1, 4, 6, 4, 1], [4, 16, 24, 16, 4], [6, 24, -476, 24, 6], [4, 16, 24, 16, 4], [1, 4, 6, 4, 1]], dtype=np.float32) / -256.0
 
 
 image_path = "lista4/pug.jpg"
@@ -270,46 +270,22 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-# Maskowanie nieostrości
-unsharp_blurred = convolve2d(image, unsharp_masking)
-unsharp_blurred = np.clip(unsharp_blurred, 0, 1)
-unsharp_blurred = (unsharp_blurred * 255).astype(np.uint8)
+# Porównanie oryginału, rozmycia Gaussa, rozmycia pudełkowego
+plt.figure(figsize=(16, 6))
 
-plt.figure(figsize=(12, 6))
-plt.subplot(1, 2, 1)
+plt.subplot(1, 3, 1)
 plt.title("Oryginał")
 plt.imshow(img, cmap='gray')
 plt.axis("off")
 
-plt.subplot(1, 2, 2)
-plt.title("Rozmycie maskowaniem nieostrości (Unsharp masking)")
-plt.imshow(unsharp_blurred, cmap='gray')
-plt.axis("off")
-
-plt.tight_layout()
-plt.show()
-
-# Porównanie oryginału, rozmycia Gaussa, rozmycia pudełkowego oraz maskowania nieostrości
-plt.figure(figsize=(18, 10))
-
-plt.subplot(2, 2, 1)
-plt.title("Oryginał")
-plt.imshow(img, cmap='gray')
-plt.axis("off")
-
-plt.subplot(2, 2, 2)
+plt.subplot(1, 3, 2)
 plt.title("Rozmycie Gaussa")
 plt.imshow(blurred, cmap='gray')
 plt.axis("off")
 
-plt.subplot(2, 2, 3)
+plt.subplot(1, 3, 3)
 plt.title("Rozmycie pudełkowe (Box blur)")
 plt.imshow(box_blurred, cmap='gray')
-plt.axis("off")
-
-plt.subplot(2, 2, 4)
-plt.title("Maskowanie nieostrości (Unsharp masking)")
-plt.imshow(unsharp_blurred, cmap='gray')
 plt.axis("off")
 
 plt.tight_layout()
@@ -330,6 +306,44 @@ plt.axis("off")
 plt.subplot(1, 2, 2)
 plt.title("Wyostrzenie obrazu")
 plt.imshow(sharpened, cmap='gray')
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+# Maskowanie nieostrości (Unsharp Masking)
+unsharp_masked = convolve2d(image, unsharp_masking)
+unsharp_masked = np.clip(unsharp_masked, 0, 1)
+unsharp_masked = (unsharp_masked * 255).astype(np.uint8)
+
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.title("Oryginał")
+plt.imshow(img, cmap='gray')
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.title("Maskowanie nieostrości (Unsharp Masking)")
+plt.imshow(unsharp_masked, cmap='gray')
+plt.axis("off")
+plt.tight_layout()
+plt.show()
+
+# Porównanie oryginału, wyostrzenia, maskowania nieostrości
+plt.figure(figsize=(16, 6))
+plt.subplot(1, 3, 1)
+plt.title("Oryginał")
+plt.imshow(img, cmap='gray')
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.title("Wyostrzenie obrazu")
+plt.imshow(sharpened, cmap='gray')
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.title("Maskowanie nieostrości (Unsharp Masking)")
+plt.imshow(unsharp_masked, cmap='gray')
 plt.axis("off")
 
 plt.tight_layout()
