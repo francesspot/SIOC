@@ -39,7 +39,7 @@ Prewitt_x = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype=np.float32)
 
 Prewitt_y = np.array([[1,  1,  1], [0,  0,  0], [-1, -1, -1]], dtype=np.float32)
 
-G = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]], dtype=np.float32) / 16.0
+G = np.array([[1, 2, 1], [1, 4, 1], [1, 2, 1]], dtype=np.float32) / 16.0
 
 box_blur = np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]], dtype=np.float32) / 9.0
 
@@ -406,7 +406,7 @@ mask_G[0::2, 0::2] = 1  # G w lewym górnym rogu
 mask_G[1::2, 1::2] = 1  # G w prawym dolnym rogu
 mask_B[1::2, 0::2] = 1  # B w lewym dolnym rogu
 
-# Łączymenie masek w filtr Bayera
+# Łączenie masek w filtr Bayera
 bayer_filter = np.stack([mask_R, mask_G, mask_B], axis=-1)
 
 # Symulacja odczytu z sensora kamery
