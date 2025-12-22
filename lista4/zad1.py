@@ -83,7 +83,7 @@ plt.imshow(np.abs(gy), cmap='gray')
 plt.axis("off")
 
 plt.subplot(2, 2, 4)
-plt.title("Krawędzie (magnitude)")
+plt.title("Krawędzie (magnituda)")
 plt.imshow(edges, cmap='gray')
 plt.axis("off")
 
@@ -401,7 +401,7 @@ mask_G = np.zeros((H_new, W_new), dtype=np.float32)
 mask_B = np.zeros((H_new, W_new), dtype=np.float32)
 
 # Ustawiamy piksele zgodnie z wzorem Bayera
-mask_R[0::2, 1::2] = 1  # R w prawym górnym rogu każdego kwadratu 2x2
+mask_R[0::2, 1::2] = 1  # R w prawym górnym rogu
 mask_G[0::2, 0::2] = 1  # G w lewym górnym rogu
 mask_G[1::2, 1::2] = 1  # G w prawym dolnym rogu
 mask_B[1::2, 0::2] = 1  # B w lewym dolnym rogu
@@ -413,9 +413,9 @@ bayer_filter = np.stack([mask_R, mask_G, mask_B], axis=-1)
 sensor_image = image_rgb * bayer_filter
 
 # Definicja kerneli do interpolacji brakujących pikseli
-kernel_R = np.ones((2, 2), dtype=np.float32)       # suma = 4 (gain 4) 
-kernel_G = 0.5 * np.ones((2, 2), dtype=np.float32) # suma = 2 (gain 2) 
-kernel_B = np.ones((2, 2), dtype=np.float32)       # suma = 4 (gain 4) 
+kernel_R = np.ones((2, 2), dtype=np.float32)       # suma = 4 
+kernel_G = 0.5 * np.ones((2, 2), dtype=np.float32) # suma = 2 
+kernel_B = np.ones((2, 2), dtype=np.float32)       # suma = 4
 
 # interpolacja brakujących pikseli dla każdego kanału
 R_interp = convolve2d(sensor_image[:, :, 0], kernel_R, padding_mode="constant")
