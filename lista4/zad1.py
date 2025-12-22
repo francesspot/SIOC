@@ -110,7 +110,6 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-
 # Wykrywanie krawędzi za pomocą operatora Laplace'a
 laplace = convolve2d(image, L)
 laplace_abs = np.abs(laplace)
@@ -376,9 +375,8 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-# ============================================
+
 # DEMOZAIKOWANIE - Filtr Bayera (2x2)
-# ============================================
 
 #Wczytanie oryginalnego obrazu RGB
 img_rgb = Image.open(image_path).convert("RGB")
@@ -417,7 +415,7 @@ kernel_R = np.ones((2, 2), dtype=np.float32)       # suma = 4
 kernel_G = 0.5 * np.ones((2, 2), dtype=np.float32) # suma = 2 
 kernel_B = np.ones((2, 2), dtype=np.float32)       # suma = 4
 
-# interpolacja brakujących pikseli dla każdego kanału
+# Interpolacja brakujących pikseli dla każdego kanału
 R_interp = convolve2d(sensor_image[:, :, 0], kernel_R, padding_mode="constant")
 G_interp = convolve2d(sensor_image[:, :, 1], kernel_G, padding_mode="constant")
 B_interp = convolve2d(sensor_image[:, :, 2], kernel_B, padding_mode="constant")
@@ -462,10 +460,7 @@ plt.show()
 print("Demozaikowanie zakończone!")
 print(f"Rozmiar wyjściowy: {reconstructed_uint8.shape}")
 
-
-# ============================================
 # Demozaikowanie - Fuji X-Trans (6x6)
-# ============================================
 
 H, W, C = image_rgb.shape  # rozmiar oryginalnego obrazu
 
@@ -486,6 +481,7 @@ fuji_filter = np.stack([mask_R, mask_G, mask_B], axis=-1)
 sensor_image = image_rgb * fuji_filter
 
 # Definicja kerneli do interpolacji brakujących pikseli
+
 # Kernel 5x5 dla czerwonego kanału
 kernel_R = np.ones((5, 5), dtype=np.float32)
 
@@ -538,9 +534,7 @@ plt.show()
 print("Demozaikowanie Fuji X-Trans zakończone!")
 print(f"Rozmiar wyjściowy: {reconstructed_uint8.shape}")
 
-# ============================================
-# Porównanie dwóch metod demozaikowania
-# ============================================
+# Porównanie dwóch metod demozaikowania - Bayera vs Fuji X-Trans
 
 plt.figure(figsize=(22, 12))
 
