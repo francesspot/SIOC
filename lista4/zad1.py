@@ -375,7 +375,6 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-
 # DEMOZAIKOWANIE - Filtr Bayera (2x2)
 
 #Wczytanie oryginalnego obrazu RGB
@@ -457,7 +456,6 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-print("Demozaikowanie zakończone!")
 print(f"Rozmiar wyjściowy: {reconstructed_uint8.shape}")
 
 # Demozaikowanie - Fuji X-Trans (6x6)
@@ -531,7 +529,6 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-print("Demozaikowanie Fuji X-Trans zakończone!")
 print(f"Rozmiar wyjściowy: {reconstructed_uint8.shape}")
 
 # Porównanie dwóch metod demozaikowania - Bayera vs Fuji X-Trans
@@ -639,5 +636,3 @@ plt.axis("off")
 
 plt.tight_layout()
 plt.show()
-
-print("Porównanie demozaikowania Bayera vs Fuji X-Trans zakończone!")
