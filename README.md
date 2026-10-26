@@ -6,17 +6,17 @@
 
 > 🎓 Listy zadań z przedmiotu **Sygnały i Obrazy Cyfrowe** (Politechnika Wrocławska)
 
-Przetwarzanie sygnałów i obrazów od środka 🔬 — zamiast gotowych funkcji z bibliotek większość algorytmów (interpolacja, splot, filtry, demozaikowanie) napisałem samodzielnie w NumPy.
+Rozwiązania list laboratoryjnych z przetwarzania sygnałów i obrazów. Większość algorytmów (interpolację, splot, filtry, demozaikowanie) zaimplementowałem samodzielnie w NumPy, zamiast korzystać z gotowych funkcji bibliotecznych.
 
 ## 🗂️ Co jest w środku
 
-| | Temat |
+| Folder | Temat |
 |---|---|
-| 🐍 `lista1` | Rozgrzewka w Pythonie: operacje na tekście, numeryczne szukanie miejsc zerowych |
-| 📈 `lista2` | Wykresy 2D i 3D, praca z obrazem jako macierzą, długość krzywej |
-| 🔍 `lista3` | **Interpolacja** różnymi jądrami i porównanie błędu (MSE); **skalowanie obrazów** — zmniejszanie (uśrednianie, max-pooling) i powiększanie, w skali szarości i RGB |
-| 🖼️ `lista4` | **Splot 2D od zera**; wykrywanie krawędzi (Sobel, Laplace, Scharr, Prewitt); rozmycie, wyostrzanie, unsharp masking; **demozaikowanie** obrazu z filtrem Bayera |
-| 🌊 `lista5` | Usuwanie szumu z obrazu za pomocą **transformaty Fouriera 2D** |
+| `lista1` | Rozgrzewka w Pythonie: operacje na tekście, numeryczne szukanie miejsc zerowych |
+| `lista2` | Wykresy 2D i 3D, praca z obrazem jako macierzą, długość krzywej |
+| `lista3` | **Interpolacja** różnymi jądrami i porównanie błędu (MSE); **skalowanie obrazów** — zmniejszanie (uśrednianie, max-pooling) i powiększanie, w skali szarości i RGB |
+| `lista4` | **Splot 2D od zera**; wykrywanie krawędzi (Sobel, Laplace, Scharr, Prewitt); rozmycie, wyostrzanie, unsharp masking; **demozaikowanie** obrazu z filtrem Bayera |
+| `lista5` | Usuwanie szumu z obrazu za pomocą **transformaty Fouriera 2D** |
 
 ## 🛠️ Technologie
 

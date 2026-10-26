@@ -6,17 +6,17 @@
 
 > 🎓 Lab assignments for the **Digital Signals and Images** course (*Sygnały i Obrazy Cyfrowe*, Wrocław University of Science and Technology)
 
-Signal and image processing from the inside 🔬 — instead of calling ready-made library functions, I wrote most of the algorithms (interpolation, convolution, filters, demosaicing) myself in NumPy.
+Lab solutions in signal and image processing. I implemented most of the algorithms (interpolation, convolution, filters, demosaicing) myself in NumPy rather than relying on ready-made library functions.
 
 ## 🗂️ What's inside
 
-| | Topic |
+| Folder | Topic |
 |---|---|
-| 🐍 `lista1` | Python warm-up: text operations, finding zeros of a function numerically |
-| 📈 `lista2` | 2D and 3D plots, treating an image as a matrix, curve length |
-| 🔍 `lista3` | **Interpolation** with different kernels and error comparison (MSE); **image scaling** — downscaling (averaging, max-pooling) and upscaling, grayscale and RGB |
-| 🖼️ `lista4` | **2D convolution from scratch**; edge detection (Sobel, Laplace, Scharr, Prewitt); blur, sharpening, unsharp masking; **demosaicing** a Bayer-filter image |
-| 🌊 `lista5` | Removing noise from an image with the **2D Fourier transform** |
+| `lista1` | Python warm-up: text operations, finding zeros of a function numerically |
+| `lista2` | 2D and 3D plots, treating an image as a matrix, curve length |
+| `lista3` | **Interpolation** with different kernels and error comparison (MSE); **image scaling** — downscaling (averaging, max-pooling) and upscaling, grayscale and RGB |
+| `lista4` | **2D convolution from scratch**; edge detection (Sobel, Laplace, Scharr, Prewitt); blur, sharpening, unsharp masking; **demosaicing** a Bayer-filter image |
+| `lista5` | Removing noise from an image with the **2D Fourier transform** |
 
 ## 🛠️ Tech
 
