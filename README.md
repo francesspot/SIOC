@@ -1,31 +1,30 @@
-**Polski** | [English](README.en.md)
+🇵🇱 **Polski** | 🇬🇧 [English](README.en.md)
 
-# SIOC — listy zadań
+# 📡 Sygnały i Obrazy Cyfrowe — laboratoria
 
-Rozwiązania list zadań laboratoryjnych z kursu SIOC, napisane w Pythonie. Tematy prowadzą od podstaw Pythona, przez wykresy, do przetwarzania sygnałów i obrazów zaimplementowanego samodzielnie w NumPy.
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C)
 
-| Folder | Zakres |
-|--------|--------|
-| `lista1` | Rozgrzewka w Pythonie: liczenie unikalnych liter, podwójnych liter i sumy cyfr w tekście; numeryczne szukanie miejsc zerowych funkcji |
-| `lista2` | NumPy i Matplotlib: wykresy 2D i podwykresy, powierzchnia 3D i wykres konturowy, wyświetlanie obrazu, generowanie macierzy z okręgiem, długość krzywej |
-| `lista3` | **Interpolacja** różnymi jądrami (najbliższy sąsiad, liniowa itd.) i porównanie MSE; punkty rozmieszczone równomiernie i losowo; interpolacja jednoetapowa i wieloetapowa; **skalowanie obrazów** — zmniejszanie (uśrednianie, max-pooling) i powiększanie, w skali szarości i RGB |
-| `lista4` | **Splot 2D** zaimplementowany od podstaw; wykrywanie krawędzi (Sobel, Laplace, Scharr, Prewitt); rozmycie (Gaussa, pudełkowe); wyostrzanie i maskowanie nieostrości; **demozaikowanie** obrazu z filtrem Bayera |
-| `lista5` | Notatnik Jupyter: usuwanie okresowego szumu z obrazu za pomocą **dwuwymiarowej transformaty Fouriera** |
+> 🎓 Listy zadań z przedmiotu **Sygnały i Obrazy Cyfrowe** (Politechnika Wrocławska)
 
-## Wymagania
+Przetwarzanie sygnałów i obrazów od środka 🔬 — zamiast gotowych funkcji z bibliotek większość algorytmów (interpolacja, splot, filtry, demozaikowanie) napisałem samodzielnie w NumPy.
 
-Python 3 oraz:
+## 🗂️ Co jest w środku
+
+| | Temat |
+|---|---|
+| 🐍 `lista1` | Rozgrzewka w Pythonie: operacje na tekście, numeryczne szukanie miejsc zerowych |
+| 📈 `lista2` | Wykresy 2D i 3D, praca z obrazem jako macierzą, długość krzywej |
+| 🔍 `lista3` | **Interpolacja** różnymi jądrami i porównanie błędu (MSE); **skalowanie obrazów** — zmniejszanie (uśrednianie, max-pooling) i powiększanie, w skali szarości i RGB |
+| 🖼️ `lista4` | **Splot 2D od zera**; wykrywanie krawędzi (Sobel, Laplace, Scharr, Prewitt); rozmycie, wyostrzanie, unsharp masking; **demozaikowanie** obrazu z filtrem Bayera |
+| 🌊 `lista5` | Usuwanie szumu z obrazu za pomocą **transformaty Fouriera 2D** |
+
+## 🛠️ Technologie
+
+Python · NumPy · Matplotlib · SciPy · scikit-image · Pillow · Jupyter
+
+## 🚀 Uruchomienie
 
 ```bash
 pip install numpy matplotlib scipy scikit-image scikit-learn pillow jupyter
+python lista4/zad1.py      # uruchamiaj z katalogu głównego repo
 ```
-
-## Uruchamianie
-
-Skrypty uruchamiaj **z katalogu głównego repozytorium**, bo ścieżki do obrazów są względne (np. `lista3/pug.jpg`):
-
-```bash
-python lista4/zad1.py
-```
-
-`lista5/task.ipynb` otwórz w Jupyterze lub VS Code. Notatnik pobiera obraz testowy z internetu, więc potrzebne jest połączenie z siecią.
